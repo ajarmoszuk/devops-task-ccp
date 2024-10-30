@@ -20,6 +20,7 @@ COPY . /project
 RUN cd /project && \
     cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -S . -B build/${BUILD_TYPE} && \
     cmake --build build/${BUILD_TYPE} && \
+    chmod +x build/${BUILD_TYPE}/hello_main && \
     cd build/${BUILD_TYPE} && ctest --rerun-failed --output-on-failure || true
 
 # Testing returns fail as "Hello World!" != "Hello, World!" and why we need "|| true"
