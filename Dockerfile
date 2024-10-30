@@ -25,7 +25,7 @@ RUN cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -S . -B build/${BUILD_TYPE} && \
     cmake --build build/${BUILD_TYPE}
 
 # Set ownership explicitly
-RUN chmod +x /project/build/${BUILD_TYPE}/hello_main && \
+RUN chmod u+x /project/build/${BUILD_TYPE}/hello_main && \
     chown appuser /project/build/${BUILD_TYPE}/hello_main
 
 USER appuser
