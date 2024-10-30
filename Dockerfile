@@ -14,6 +14,9 @@ RUN adduser -D -u 1000 appuser && \
     mkdir -p /project && \
     chown -R appuser /project
 
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
 USER appuser
 COPY . /project
 WORKDIR /project
@@ -24,8 +27,5 @@ RUN cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -S . -B build/${BUILD_TYPE} && \
     chmod +x build/${BUILD_TYPE}/hello_main && \
     cd build/${BUILD_TYPE} && \
     ctest --rerun-failed --output-on-failure || true
-
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
