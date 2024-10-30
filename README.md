@@ -32,7 +32,7 @@ cmake --build build_dir # run the build
 ### TODO (the actual task for You)
 
 - [x] Prepare the project source code
-- [ ] Write a Dockerfile containerizing the `hello_main` app
+- [x] Write a Dockerfile containerizing the `hello_main` app
 - [ ] Write a GitHub workflow testing the project and building deployable docker image
   - [ ] Build application in Release and Debug mode
   - [ ] Build and push image to github registry only when tag is pushed
