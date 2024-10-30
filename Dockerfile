@@ -25,4 +25,7 @@ RUN cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -S . -B build/${BUILD_TYPE} && \
     cd build/${BUILD_TYPE} && \
     ctest --rerun-failed --output-on-failure || true
 
-ENTRYPOINT ["/project/build/${BUILD_TYPE}/hello_main"]
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
