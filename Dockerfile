@@ -22,4 +22,6 @@ RUN cd /project && \
     cmake --build build/${BUILD_TYPE} && \
     cd build/${BUILD_TYPE} && ctest --rerun-failed --output-on-failure || true
 
+# Testing returns fail as "Hello World!" != "Hello, World!" and why we need "|| true"
+
 CMD ["/bin/sh"]

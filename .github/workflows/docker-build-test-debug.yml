@@ -1,0 +1,38 @@
+name: Build and Push Debug
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Docker image
+        run: |
+          DOCKER_BUILDKIT=1 docker build --build-arg BUILD_TYPE=Debug -t ghcr.io/${{ github.repository }}/devops-task-ccp-debug:latest .
+
+      - name: Run container for final checks
+        run: docker run --rm ghcr.io/${{ github.repository }}/devops-task-ccp-debug:latest /bin/sh -c "cd /project/build/Debug && ./hello_main"
+
+      - name: Push Docker image to GitHub Container Registry
+        if: github.ref == 'refs/heads/main'
+        run: docker push ghcr.io/${{ github.repository }}/devops-task-ccp-debug:latest
