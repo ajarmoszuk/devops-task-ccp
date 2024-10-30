@@ -31,7 +31,7 @@ jobs:
           DOCKER_BUILDKIT=1 docker build --build-arg BUILD_TYPE=Debug -t ghcr.io/${{ github.repository }}/devops-task-ccp-debug:latest .
 
       - name: Run container for final checks
-        run: docker run --rm ghcr.io/${{ github.repository }}/devops-task-ccp-debug:latest /bin/sh -c "chmod +x /project/build/Debug/hello_main && /project/build/Debug/hello_main"
+        run: docker run --rm ghcr.io/${{ github.repository }}/devops-task-ccp-debug:latest
 
       - name: Push Docker image to GitHub Container Registry
         if: github.ref == 'refs/heads/main'

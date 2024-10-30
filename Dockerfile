@@ -16,14 +16,13 @@ RUN adduser -D -u 1000 appuser && \
 
 USER appuser
 COPY . /project
+WORKDIR /project
 
 # Configure, build, and test based on the BUILD_TYPE environment variable
-WORKDIR /project
 RUN cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -S . -B build/${BUILD_TYPE} && \
     cmake --build build/${BUILD_TYPE} && \
     chmod +x build/${BUILD_TYPE}/hello_main && \
     cd build/${BUILD_TYPE} && \
     ctest --rerun-failed --output-on-failure || true
 
-# Set the entrypoint to start a shell by default
-CMD ["/bin/sh"]
+ENTRYPOINT ["/project/build/${BUILD_TYPE}/hello_main"]
